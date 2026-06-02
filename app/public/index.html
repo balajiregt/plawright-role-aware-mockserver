@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Identity Manager Role Demo</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="layout">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Digital Identity Manager</p>
+          <h1>Role-Aware Operations Console</h1>
+        </div>
+        <div class="status" data-testid="connection-status">Connecting...</div>
+      </header>
+
+      <section class="identity-band">
+        <div>
+          <span>Signed in user</span>
+          <strong data-testid="user-name">Loading</strong>
+        </div>
+        <div>
+          <span>Roles from id_token</span>
+          <strong data-testid="role-list">Loading</strong>
+        </div>
+        <div>
+          <span>Feature flags</span>
+          <strong data-testid="feature-flag-state">Loading</strong>
+        </div>
+      </section>
+
+      <section class="hero-panel">
+        <div>
+          <p class="eyebrow">Workspace</p>
+          <h2 data-testid="workspace-title">Loading workspace</h2>
+          <p data-testid="workspace-summary">Waiting for mockserver token and workspace data.</p>
+        </div>
+        <button type="button" data-testid="refresh-button">Refresh session</button>
+      </section>
+
+      <section>
+        <div class="section-heading">
+          <h2>Available actions</h2>
+          <span data-testid="action-count">0 actions</span>
+        </div>
+        <div class="action-grid" data-testid="action-grid"></div>
+      </section>
+
+      <section class="audit-section">
+        <div class="section-heading">
+          <h2>Session proof</h2>
+          <span>auth/token → id_token → workspace</span>
+        </div>
+        <pre data-testid="token-proof"></pre>
+      </section>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>
+
