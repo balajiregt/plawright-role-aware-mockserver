@@ -9,6 +9,75 @@ This is a runnable project that demonstrates the same role-injection pattern as 
 5. The app calls a protected workspace endpoint with the token.
 6. The UI renders different functionality for `admin`, `viewer`, and `vip`.
 
+## High-Level Flow
+
+```mermaid
+flowchart LR
+  subgraph Playwright
+    Spec["Role spec"]
+    Helper["mockAgentRoles(page, roles)"]
+  end
+
+  subgraph Browser
+    App["Local operations console"]
+    TokenDecode["Decode id_token roles"]
+    UI["Render role-specific actions"]
+  end
+
+  subgraph Mockserver
+    Config["GET /bff/v1/ui-config"]
+    Token["POST /bff/auth/token"]
+    Workspace["GET /bff/v1/workspace"]
+  end
+
+  Spec --> Helper
+  Helper -->|"continue request with agent-roles"| Token
+  App --> Config
+  App --> Token
+  Token -->|"signed id_token"| TokenDecode
+  TokenDecode -->|"Bearer id_token"| Workspace
+  Workspace -->|"admin / viewer / vip response"| UI
+  Spec -->|"assert visible and restricted actions"| UI
+```
+
+## Request Sequence
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant Test as Playwright test
+  participant Browser as Browser page
+  participant App as Local app
+  participant Token as Mockserver token endpoint
+  participant Workspace as Mockserver workspace endpoint
+
+  Test->>Browser: mockAgentRoles(page, ["admin"])
+  Test->>Browser: page.goto("/")
+  App->>Token: POST /bff/auth/token
+  Browser->>Token: Continue request with agent-roles: admin
+  Token-->>App: id_token with roles: ["admin"]
+  App->>Workspace: GET /bff/v1/workspace with Bearer id_token
+  Workspace-->>App: Admin Operations Workspace
+  App-->>Browser: Render admin-only actions
+  Test->>Browser: Assert admin actions visible
+```
+
+## Testing Strategy
+
+```mermaid
+flowchart TD
+  Legacy["Legacy integration interception<br/>Playwright fulfills API responses directly"]
+  Mockserver["Mockserver-owned behavior<br/>Playwright only adds test headers"]
+  RoleTests["Role matrix tests<br/>admin / viewer / vip"]
+  Contract["Mockserver contract confidence<br/>token, config, workspace shape"]
+  Smoke["Small real-environment smoke checks"]
+
+  Legacy -->|"flaky at scale"| Mockserver
+  Mockserver --> RoleTests
+  Mockserver --> Contract
+  RoleTests --> Smoke
+```
+
 ## Roles
 
 | Role | Unique UI functionality |
