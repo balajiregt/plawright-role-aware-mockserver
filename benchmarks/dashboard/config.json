@@ -1,0 +1,32 @@
+{
+  "steps": [
+    [
+      "node",
+      "node_modules/@playwright/test/cli.js",
+      "test",
+      "--config=benchmarks/playwright.config.ts"
+    ],
+    [
+      "node",
+      "benchmarks/summarize.mjs"
+    ]
+  ],
+  "outputs": [
+    "benchmark-results/playwright.json",
+    "benchmark-results/summary.json"
+  ],
+  "project": "mockserver",
+  "expectedCases": [
+    "direct backend rejects missing and forged tokens @benchmark",
+    "legacy-interception | admin @benchmark",
+    "legacy-interception | downstream-error @benchmark",
+    "legacy-interception | expired-token @benchmark",
+    "legacy-interception | viewer @benchmark",
+    "legacy-interception | vip @benchmark",
+    "mockserver | admin @benchmark",
+    "mockserver | downstream-error @benchmark",
+    "mockserver | expired-token @benchmark",
+    "mockserver | viewer @benchmark",
+    "mockserver | vip @benchmark"
+  ]
+}

@@ -11,9 +11,10 @@
     "test:legacy-interception": "playwright test --config=playwright/playwright.config.ts --grep @legacy-interception",
     "test:headed": "playwright test --config=playwright/playwright.config.ts --headed",
     "show-report": "playwright show-report playwright-report",
-    "benchmark": "playwright test --config=benchmarks/playwright.config.ts && node benchmarks/summarize.mjs",
+    "benchmark": "python3 benchmarks/dashboard/run.py",
     "benchmark:summary": "node benchmarks/summarize.mjs",
-    "benchmark:test": "node --test benchmarks/*.test.mjs"
+    "benchmark:test": "node --test benchmarks/*.test.mjs",
+    "benchmark:publish": "python3 benchmarks/dashboard/publish.py"
   },
   "dependencies": {
     "@koa/bodyparser": "^6.1.0",

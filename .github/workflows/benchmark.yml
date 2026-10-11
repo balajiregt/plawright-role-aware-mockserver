@@ -1,0 +1,37 @@
+name: Publish benchmark evidence
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["benchmarks/**", "package*.json", ".github/workflows/benchmark.yml", "app/**", "mockserver/**", "playwright/**"]
+permissions:
+  contents: read
+concurrency:
+  group: benchmark-publication
+  cancel-in-progress: false
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Run complete benchmark
+        id: benchmark
+        run: npm run benchmark
+        env:
+          BENCHMARK_PUBLISH: '0'
+      - name: Publish this attempt even if benchmark failed
+        if: always() && steps.benchmark.outcome != 'skipped'
+        run: npm run benchmark:publish
+        env:
+          GH_BENCHMARK_TOKEN: ${{ github.token }}

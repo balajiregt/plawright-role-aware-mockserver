@@ -7,3 +7,5 @@ Both arms execute the same admin, viewer, VIP, downstream-error and expired-toke
 Each successful journey attaches mode, scenario, repeat, programmatic setup time and journey-plus-oracle time. JSON results retain failures/skips and missing measurements; summary reports inconsistent repeated outcomes, report SHA256, revision and dirty-source flag. Human setup effort and diagnosis time are null until separately observed. Sequential samples and different browser request paths are confounders: do not turn the timings into causal speedup or financial savings claims. Reproducibility here means repeated outcomes for these five fixtures, not production flake rate.
 
 Local validation 2026-10-11: 33/33 passed (15 journeys per arm, plus three direct token-rejection checks). No inconsistent scenario outcomes in that run. Generated evidence/traces are ignored in `benchmark-results/`; review aggregates before publication.
+
+See [automatic dashboard publication](AUTOMATIC-PUBLICATION.md) for the canonical runner, CI, privacy controls and retry behaviour.
