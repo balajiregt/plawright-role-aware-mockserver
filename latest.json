@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "project": "mockserver",
-  "updatedAt": "2026-10-11T14:50:12.723054+00:00",
+  "updatedAt": "2026-10-11T14:50:59.697350+00:00",
   "run": {
     "project": "mockserver",
     "title": "Role-Aware Mockserver",
@@ -273,19 +273,19 @@
     "evidence": [
       {
         "file": "summary.json",
-        "sha256": "7367c511ae3596cebb79b6e264461e4a91babab2d85a212370c29827b095a04a",
-        "fileModifiedAt": "2026-10-11T14:46:28.970797+00:00"
+        "sha256": "5b7388d1b665ff9c1eec4826001ecaa28b461fcfb165fcc354ecbc9214e1e343",
+        "fileModifiedAt": "2026-10-11T14:50:58.806885+00:00"
       },
       {
         "file": "playwright.json",
-        "sha256": "32273fe76b3d7c383e85b33cec7d7896f6730acbcd910c8ea02fca0f619633bb",
-        "fileModifiedAt": "2026-10-11T14:46:28.745661+00:00"
+        "sha256": "011feb62d8cc2c50f5c7e53ffaa95251b6db44c5ab1de6cb47246a3dbd6e6890",
+        "fileModifiedAt": "2026-10-11T14:50:58.712884+00:00"
       }
     ],
-    "runAt": "2026-10-11T14:46:14.406894+00:00",
+    "runAt": "2026-10-11T14:50:48.252696+00:00",
     "timeBasis": "benchmark attempt start",
-    "revision": "2ce3a327551de9dab997871c7c566989079a460c",
-    "dirtySource": true,
+    "revision": "9727b865bf8cb6d87cf7fb344c21cce95b0c5f13",
+    "dirtySource": false,
     "comparison": {
       "legacy-interception": {
         "attempted": 15,
@@ -293,8 +293,8 @@
         "failed": 0,
         "skipped": 0,
         "missingMeasurements": 0,
-        "meanSetupMs": 6.322630600000055,
-        "meanJourneyAndOracleMs": 178.5371556666667,
+        "meanSetupMs": 5.993704333333381,
+        "meanJourneyAndOracleMs": 161.40874706666668,
         "inconsistentScenarios": []
       },
       "mockserver": {
@@ -303,20 +303,20 @@
         "failed": 0,
         "skipped": 0,
         "missingMeasurements": 0,
-        "meanSetupMs": 4.282316600000028,
-        "meanJourneyAndOracleMs": 146.95905833333327,
+        "meanSetupMs": 3.535644399999971,
+        "meanJourneyAndOracleMs": 138.87152880000005,
         "inconsistentScenarios": []
       }
     },
     "status": "passed",
     "integrity": "verified",
-    "runId": "2774715f5e437981",
+    "runId": "9c668ece98b79083",
     "execution": {
-      "startedAt": "2026-10-11T14:46:14.406894+00:00",
-      "finishedAt": "2026-10-11T14:46:29.011634+00:00",
+      "startedAt": "2026-10-11T14:50:48.252696+00:00",
+      "finishedAt": "2026-10-11T14:50:58.830664+00:00",
       "exitCode": 0,
-      "revision": "2ce3a327551de9dab997871c7c566989079a460c",
-      "dirtySource": true
+      "revision": "9727b865bf8cb6d87cf7fb344c21cce95b0c5f13",
+      "dirtySource": false
     }
   },
   "history": [
@@ -635,6 +635,323 @@
         "exitCode": 0,
         "revision": "2ce3a327551de9dab997871c7c566989079a460c",
         "dirtySource": true
+      }
+    },
+    {
+      "project": "mockserver",
+      "title": "Role-Aware Mockserver",
+      "repository": "https://github.com/balajiregt/plawright-role-aware-mockserver",
+      "protocol": "https://github.com/balajiregt/plawright-role-aware-mockserver/blob/main/benchmarks/README.md",
+      "checks": [
+        {
+          "name": "Summary matches source report",
+          "ok": true,
+          "detail": "SHA256 comparison"
+        },
+        {
+          "name": "legacy-interception denominator",
+          "ok": true,
+          "detail": "15 observed journeys"
+        },
+        {
+          "name": "mockserver denominator",
+          "ok": true,
+          "detail": "15 observed journeys"
+        },
+        {
+          "name": "No expected-failure oracles",
+          "ok": true,
+          "detail": "Expected failures cannot qualify as successful oracle evidence"
+        },
+        {
+          "name": "No oracle retries",
+          "ok": true,
+          "detail": "Retry counts checked where browser/JUnit results are supplied"
+        },
+        {
+          "name": "Evidence matches the fixed benchmark protocol",
+          "ok": true,
+          "detail": "Case identities and counts checked against the versioned synthetic protocol"
+        },
+        {
+          "name": "Evidence belongs to this attempt",
+          "ok": true,
+          "detail": "All required source files were regenerated during this run"
+        }
+      ],
+      "metrics": [
+        {
+          "label": "Passed checks",
+          "value": 33,
+          "unit": " / 33",
+          "note": ""
+        },
+        {
+          "label": "Human setup effort",
+          "value": null,
+          "unit": "ms",
+          "note": ""
+        },
+        {
+          "label": "Debugging time",
+          "value": null,
+          "unit": "ms",
+          "note": ""
+        }
+      ],
+      "limitations": [
+        "Both arms use synthetic local dependencies; no real identity provider comparison.",
+        "Setup is programmatic setup, not human environment preparation.",
+        "No production stability, financial savings or diagnosis-time claim.",
+        "Small sequential samples; timings are descriptive, not causal speedup evidence."
+      ],
+      "cases": [
+        {
+          "name": "legacy-interception | admin @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "legacy-interception | viewer @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "legacy-interception | vip @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "legacy-interception | downstream-error @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "legacy-interception | expired-token @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "mockserver | admin @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "mockserver | viewer @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "mockserver | vip @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "mockserver | downstream-error @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "mockserver | expired-token @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "direct backend rejects missing and forged tokens @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "legacy-interception | admin @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "legacy-interception | viewer @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "legacy-interception | vip @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "legacy-interception | downstream-error @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "legacy-interception | expired-token @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "mockserver | admin @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "mockserver | viewer @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "mockserver | vip @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "mockserver | downstream-error @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "mockserver | expired-token @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "direct backend rejects missing and forged tokens @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "legacy-interception | admin @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "legacy-interception | viewer @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "legacy-interception | vip @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "legacy-interception | downstream-error @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "legacy-interception | expired-token @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "mockserver | admin @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "mockserver | viewer @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "mockserver | vip @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "mockserver | downstream-error @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "mockserver | expired-token @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        },
+        {
+          "name": "direct backend rejects missing and forged tokens @benchmark",
+          "status": "passed",
+          "attempts": 1,
+          "expectedStatus": "passed"
+        }
+      ],
+      "evidence": [
+        {
+          "file": "summary.json",
+          "sha256": "5b7388d1b665ff9c1eec4826001ecaa28b461fcfb165fcc354ecbc9214e1e343",
+          "fileModifiedAt": "2026-10-11T14:50:58.806885+00:00"
+        },
+        {
+          "file": "playwright.json",
+          "sha256": "011feb62d8cc2c50f5c7e53ffaa95251b6db44c5ab1de6cb47246a3dbd6e6890",
+          "fileModifiedAt": "2026-10-11T14:50:58.712884+00:00"
+        }
+      ],
+      "runAt": "2026-10-11T14:50:48.252696+00:00",
+      "timeBasis": "benchmark attempt start",
+      "revision": "9727b865bf8cb6d87cf7fb344c21cce95b0c5f13",
+      "dirtySource": false,
+      "comparison": {
+        "legacy-interception": {
+          "attempted": 15,
+          "passed": 15,
+          "failed": 0,
+          "skipped": 0,
+          "missingMeasurements": 0,
+          "meanSetupMs": 5.993704333333381,
+          "meanJourneyAndOracleMs": 161.40874706666668,
+          "inconsistentScenarios": []
+        },
+        "mockserver": {
+          "attempted": 15,
+          "passed": 15,
+          "failed": 0,
+          "skipped": 0,
+          "missingMeasurements": 0,
+          "meanSetupMs": 3.535644399999971,
+          "meanJourneyAndOracleMs": 138.87152880000005,
+          "inconsistentScenarios": []
+        }
+      },
+      "status": "passed",
+      "integrity": "verified",
+      "runId": "9c668ece98b79083",
+      "execution": {
+        "startedAt": "2026-10-11T14:50:48.252696+00:00",
+        "finishedAt": "2026-10-11T14:50:58.830664+00:00",
+        "exitCode": 0,
+        "revision": "9727b865bf8cb6d87cf7fb344c21cce95b0c5f13",
+        "dirtySource": false
       }
     }
   ]
