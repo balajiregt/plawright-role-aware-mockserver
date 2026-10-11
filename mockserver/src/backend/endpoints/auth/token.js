@@ -13,7 +13,7 @@ export async function token(ctx) {
     iss: issuerUri,
     scp: `${ctx.request.body?.scope || 'openid profile'} User.Read User.Write`,
     iat: now,
-    exp: now + 3600,
+    exp: ctx.get('benchmark-expired-token') === 'true' ? now - 1 : now + 3600,
   };
 
   const idTokenPayload = {
@@ -23,7 +23,7 @@ export async function token(ctx) {
     name: 'Role Demo User',
     preferred_username: 'role.demo@example.test',
     iat: now,
-    exp: now + 3600,
+    exp: ctx.get('benchmark-expired-token') === 'true' ? now - 1 : now + 3600,
     roles: normalizedRoles,
   };
 

@@ -17,9 +17,9 @@ const router = new Router();
 const port = Number(process.env.MOCKSERVER_PORT ?? 3333);
 
 app.use(cors({
-  origin: 'http://127.0.0.1:5173',
+  origin: (ctx) => ['http://127.0.0.1:5173', 'http://127.0.0.1:5273'].includes(ctx.get('Origin')) ? ctx.get('Origin') : '',
   credentials: true,
-  allowHeaders: ['content-type', 'authorization', 'agent-roles', 'override-feature-flags', 'downstream-error'],
+  allowHeaders: ['content-type', 'authorization', 'agent-roles', 'override-feature-flags', 'downstream-error', 'benchmark-expired-token'],
 }));
 
 app.use(bodyParser());

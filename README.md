@@ -160,3 +160,7 @@ playwright/
   tests/legacy-network-interception.spec.ts
   playwright.config.ts
 ```
+
+## Controlled benchmark instrumentation
+
+See [benchmark protocol and validation](benchmarks/README.md) for reproducible synthetic tasks, measured evidence, missing metrics and claim limitations.

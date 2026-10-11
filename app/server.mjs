@@ -23,7 +23,13 @@ function assetPath(url = '/') {
 const server = http.createServer(async (req, res) => {
   try {
     const filePath = assetPath(req.url);
-    const body = await readFile(filePath);
+    let body = await readFile(filePath);
+    if (filePath.endsWith('app.js')) {
+      const backend = process.env.MOCKSERVER_URL ?? 'http://127.0.0.1:3333';
+      const url = new URL(backend);
+      if (url.protocol !== 'http:' || url.hostname !== '127.0.0.1' || url.pathname !== '/') throw new Error('Use a loopback backend URL');
+      body = Buffer.from(body.toString().replace('http://127.0.0.1:3333', url.origin));
+    }
     res.writeHead(200, {
       'content-type': contentTypes[extname(filePath)] ?? 'application/octet-stream',
       'cache-control': 'no-store',
