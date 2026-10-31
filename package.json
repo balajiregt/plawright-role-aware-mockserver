@@ -14,7 +14,10 @@
     "benchmark": "python3 benchmarks/dashboard/run.py",
     "benchmark:summary": "node benchmarks/summarize.mjs",
     "benchmark:test": "node --test benchmarks/*.test.mjs",
-    "benchmark:publish": "python3 benchmarks/dashboard/publish.py"
+    "benchmark:publish": "python3 benchmarks/dashboard/publish.py",
+    "security:staged": "node scripts/security-gate.mjs",
+    "security:hooks": "node scripts/install-security-hook.mjs",
+    "security:check": "python3 scripts/security_audit.py"
   },
   "dependencies": {
     "@koa/bodyparser": "^6.1.0",

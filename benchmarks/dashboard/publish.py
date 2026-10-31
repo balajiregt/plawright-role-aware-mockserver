@@ -106,7 +106,18 @@ def main():
         if receipt.get('finishedAt') is None or receipt.get('exitCode') != 0: raise ValueError('A completed benchmark is required before trial publication')
         receipt['finishedAt'] = now()
         write(receipt_path,receipt)
-    run = export(root, project)
+    if '--prepared' in sys.argv:
+        # A read-only benchmark job prepares this closed aggregate. The write-token
+        # job validates it again and never executes benchmark-controlled artifacts.
+        file = pathlib.Path(sys.argv[sys.argv.index('--prepared') + 1])
+        if file.stat().st_size > 1_000_000:
+            raise ValueError('Prepared aggregate exceeds size limit')
+        run = json.loads(file.read_text())
+        vocabulary = set(json.loads((HERE/'public-vocabulary.json').read_text()))
+        if run.get('project') != project or sanitize(run, vocabulary) != run or not re.fullmatch(r'[a-f0-9]{16}', run.get('runId','')):
+            raise ValueError('Invalid prepared aggregate')
+    else:
+        run = export(root, project)
     pending = root/'benchmark-results/dashboard-pending.json'; write(pending,run)
     if os.environ.get('BENCHMARK_PUBLISH') == '0':
         print('Public aggregate prepared; publication disabled for this invocation.'); return
