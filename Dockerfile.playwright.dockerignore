@@ -1,0 +1,36 @@
+# Only application and test source needed by this validation image may enter it.
+**
+!Dockerfile.playwright
+!Dockerfile.playwright.dockerignore
+!package.json
+!package-lock.json
+!app/
+!app/**
+!mockserver/
+!mockserver/**
+!playwright/
+!playwright/**
+
+# Exclude private/generated material even if it appears inside an allowed tree.
+**/.git
+**/.git/**
+**/.env
+**/.env.*
+**/.npmrc
+**/node_modules
+**/node_modules/**
+**/contexts
+**/contexts/**
+**/artifacts
+**/artifacts/**
+**/test-results
+**/test-results/**
+**/playwright-report
+**/playwright-report/**
+**/.auth
+**/.auth/**
+**/*.pem
+**/*.key
+**/__pycache__
+**/__pycache__/**
+**/.DS_Store

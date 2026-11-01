@@ -1,0 +1,23 @@
+# Keep the browser image aligned with @playwright/test in package-lock.json.
+FROM mcr.microsoft.com/playwright:v1.60.0-noble
+
+ENV CI=1 \
+    PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 \
+    PLAYWRIGHT_JSON_OUTPUT_FILE=/evidence/playwright.json \
+    PLAYWRIGHT_HTML_OUTPUT_DIR=/evidence/html \
+    PLAYWRIGHT_HTML_OPEN=never \
+    npm_config_cache=/tmp/npm-cache
+
+WORKDIR /workspace
+COPY package.json package-lock.json ./
+RUN npm ci --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org --cache=/tmp/npm-build-cache \
+    && node -e "if (require('@playwright/test/package.json').version !== '1.60.0') throw new Error('Align the Playwright image with package-lock.json')" \
+    && rm -rf /tmp/npm-build-cache
+
+COPY --chown=pwuser:pwuser app/ ./app/
+COPY --chown=pwuser:pwuser mockserver/ ./mockserver/
+COPY --chown=pwuser:pwuser playwright/ ./playwright/
+RUN mkdir -p /evidence && chown pwuser:pwuser /evidence
+
+USER pwuser
+CMD ["npm", "run", "test:roles", "--", "--workers=1", "--retries=0", "--reporter=list,json,html", "--output=/evidence/test-results"]
