@@ -1,25 +1,29 @@
-import { test } from '@playwright/test';
-import { AgentRole, mockAgentRoles } from '../helpers/api-mock';
+import { expect, test } from '@playwright/test';
+import { AgentRole, mockAgentRoles, mockDownstreamServerError } from '../helpers/api-mock';
 import { OperationsConsoleAssertions } from '../pages/operations-console.assertions';
 import { OperationsConsolePage } from '../pages/operations-console.page';
 
 const expectations: Record<AgentRole, {
   title: string;
+  summary: string;
   visible: string[];
   hidden: string[];
 }> = {
   admin: {
     title: 'Admin Operations Workspace',
+    summary: 'Full operational access for identity management, security overrides, and audit review.',
     visible: ['admin-console', 'security-override', 'audit-log'],
     hidden: ['profile-search', 'vip-desk', 'concierge-notes'],
   },
   viewer: {
     title: 'Read-Only Viewer Workspace',
+    summary: 'Limited access for profile lookup, operational reports, and non-mutating investigation.',
     visible: ['profile-search', 'read-only-dashboard', 'reports'],
     hidden: ['admin-console', 'security-override', 'vip-desk'],
   },
   vip: {
     title: 'VIP Support Workspace',
+    summary: 'Specialist tools for high-priority profiles, priority handling, and concierge notes.',
     visible: ['vip-desk', 'priority-override', 'concierge-notes'],
     hidden: ['admin-console', 'profile-search', 'audit-log'],
   },
@@ -64,6 +68,38 @@ test.describe('@local @roles GIVEN the agent opens the role-aware operations con
       for (const action of expected.hidden) {
         await operationsAssertions.assertActionNotAvailable(action);
       }
+    });
+  });
+
+  test('clears a loaded workspace after failed refresh and restores the same role catalog on recovery', async ({ page }, testInfo) => {
+    const [role] = testInfo.project.metadata.roles as AgentRole[];
+    const expected = expectations[role];
+    await mockAgentRoles(page, [role]);
+
+    await test.step(`GIVEN a successfully loaded ${role} workspace`, async () => {
+      await operationsConsole.open();
+      await operationsAssertions.assertRoles([role]);
+      await operationsAssertions.assertWorkspaceCatalog(expected);
+    });
+
+    await test.step('WHEN Refresh session receives the backend-owned downstream error THEN no old workspace remains', async () => {
+      await mockDownstreamServerError(page);
+      const failure = page.waitForResponse(response => new URL(response.url()).pathname === '/bff/v1/workspace');
+      await operationsConsole.refresh();
+      const response = await failure;
+      expect(response.status()).toBe(503);
+      const body = await response.json();
+      expect(body.message).toBe('Mocked downstream workspace service failure');
+      await operationsAssertions.assertWorkspaceUnavailable(body.message);
+    });
+
+    await test.step('WHEN the failure is removed and Refresh session succeeds THEN the same exact catalog returns', async () => {
+      await page.unroute('**/bff/v1/workspace**');
+      const recovery = page.waitForResponse(response => new URL(response.url()).pathname === '/bff/v1/workspace');
+      await operationsConsole.refresh();
+      expect((await recovery).status()).toBe(200);
+      await operationsAssertions.assertRoles([role]);
+      await operationsAssertions.assertWorkspaceCatalog(expected);
     });
   });
 

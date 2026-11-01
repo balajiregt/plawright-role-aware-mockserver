@@ -93,16 +93,17 @@ function render({ config, tokenPayload, workspace }) {
   );
 }
 
-elements.refreshButton.addEventListener('click', () => {
-  loadSession().catch((error) => {
-    elements.connectionStatus.textContent = 'Mockserver error';
-    elements.connectionStatus.dataset.state = 'error';
-    elements.workspaceSummary.textContent = error.message;
-  });
-});
-
-loadSession().catch((error) => {
+function renderSessionError(error) {
   elements.connectionStatus.textContent = 'Mockserver error';
   elements.connectionStatus.dataset.state = 'error';
+  elements.workspaceTitle.textContent = 'Workspace unavailable';
   elements.workspaceSummary.textContent = error.message;
+  elements.actionGrid.replaceChildren();
+  elements.actionCount.textContent = '0 actions';
+}
+
+elements.refreshButton.addEventListener('click', () => {
+  loadSession().catch(renderSessionError);
 });
+
+loadSession().catch(renderSessionError);
