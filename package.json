@@ -11,10 +11,9 @@
     "test:legacy-interception": "playwright test --config=playwright/playwright.config.ts --grep @legacy-interception",
     "test:headed": "playwright test --config=playwright/playwright.config.ts --headed",
     "show-report": "playwright show-report playwright-report",
-    "benchmark": "python3 benchmarks/dashboard/run.py",
+    "benchmark": "playwright test --config=benchmarks/playwright.config.ts; status=$?; node benchmarks/summarize.mjs && exit $status",
     "benchmark:summary": "node benchmarks/summarize.mjs",
     "benchmark:test": "node --test benchmarks/*.test.mjs",
-    "benchmark:publish": "python3 benchmarks/dashboard/publish.py",
     "security:staged": "node scripts/security-gate.mjs",
     "security:hooks": "node scripts/install-security-hook.mjs",
     "security:check": "python3 scripts/security_audit.py"

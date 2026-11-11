@@ -8,4 +8,4 @@ Each successful journey attaches mode, scenario, repeat, programmatic setup time
 
 Local validation 2026-10-11: 33/33 passed (15 journeys per arm, plus three direct token-rejection checks). No inconsistent scenario outcomes in that run. Generated evidence/traces are ignored in `benchmark-results/`; review aggregates before publication.
 
-See [automatic dashboard publication](AUTOMATIC-PUBLICATION.md) for the canonical runner, CI, privacy controls and retry behaviour.
+`npm run benchmark` runs the comparison and writes `benchmark-results/summary.json` locally; failures are kept and the run exits non-zero. Results are not published anywhere. The former dashboard publication runner was retired on 11 November 2026 together with the public framework-benchmark dashboard.
